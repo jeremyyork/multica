@@ -9,4 +9,7 @@
 (allow file-read* (subpath "/Users/jeremyyork/.opencode"))
 (deny process-exec (literal "/usr/bin/security") (literal "/opt/homebrew/bin/gh") (literal "/opt/homebrew/bin/bao")
       (literal "/opt/homebrew/bin/railway") (literal "/usr/bin/ssh") (literal "/usr/bin/scp") (literal "/opt/homebrew/bin/psql"))
-(deny network-outbound (remote ip "localhost:5432") (remote ip "localhost:5442") (remote ip "localhost:8210") (remote ip "localhost:8211"))
+;; Loopback is default-deny (vault, databases, pprof :6060, the poller, Lima, Next dev);
+;; only the Multica API is reachable. Later rules win.
+(deny network-outbound (remote ip "localhost:*"))
+(allow network-outbound (remote ip "localhost:8080"))
