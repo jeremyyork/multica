@@ -1,0 +1,12 @@
+;; OpenCode sandbox for free-model runs: no access to the owner's home except the
+;; run workspaces, the isolated sandbox home, and the OpenCode install.
+(version 1)
+(allow default)
+(deny file-read* file-write* (subpath "/Users/jeremyyork"))
+(deny file-read* file-write* (subpath "/private/tmp/claude-501") (subpath "/Volumes"))
+(allow file-read-metadata (literal "/Users") (literal "/Users/jeremyyork"))
+(allow file-read* file-write* (subpath "/Users/jeremyyork/.oc-sandbox") (subpath "/Users/jeremyyork/multica_workspaces"))
+(allow file-read* (subpath "/Users/jeremyyork/.opencode"))
+(deny process-exec (literal "/usr/bin/security") (literal "/opt/homebrew/bin/gh") (literal "/opt/homebrew/bin/bao")
+      (literal "/opt/homebrew/bin/railway") (literal "/usr/bin/ssh") (literal "/usr/bin/scp") (literal "/opt/homebrew/bin/psql"))
+(deny network-outbound (remote ip "localhost:5432") (remote ip "localhost:5442") (remote ip "localhost:8210") (remote ip "localhost:8211"))

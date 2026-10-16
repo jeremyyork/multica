@@ -22,7 +22,7 @@ fi
 if [ ! -f "$ENV_FILE" ]; then
   cp "$ROOT/.env.example" "$ENV_FILE"
   sed -i '' -E "s#^POSTGRES_PORT=.*#POSTGRES_PORT=$PGPORT#; s#^DATABASE_URL=.*#DATABASE_URL=postgres://multica@127.0.0.1:$PGPORT/multica?sslmode=disable#; s#^JWT_SECRET=.*#JWT_SECRET=$(openssl rand -hex 32)#" "$ENV_FILE"
-  grep -q '^DO_NOT_TRACK=' "$ENV_FILE" || echo "DO_NOT_TRACK=1" >> "$ENV_FILE"
+  sed -i "" -E "s/^DO_NOT_TRACK=.*/DO_NOT_TRACK=1/" "$ENV_FILE"; grep -q "^DO_NOT_TRACK=1" "$ENV_FILE" || echo "DO_NOT_TRACK=1" >> "$ENV_FILE"
 fi
 
 # 3. deps (skip browser/electron binaries: disk is tight, desktop not needed) + migrations + binaries
